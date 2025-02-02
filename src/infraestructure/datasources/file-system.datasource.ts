@@ -64,5 +64,4 @@ export class FileSystemDatasource implements LogDataSource {
 				throw new Error(`${ serverityLevel } not implemented` );
 		}
 	}
-
 }
