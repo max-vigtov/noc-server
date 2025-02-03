@@ -49,7 +49,7 @@ export class FileSystemDatasource implements LogDataSource {
 		
 		const logs = content.split('\n').map( log => LogEntity.fromJson(log) );
 		return logs;
-	}
+	} 
 
 	async getLogs(serverityLevel: LogSeverityLevel): Promise<LogEntity[]> {
 		switch (serverityLevel) {

@@ -6,10 +6,12 @@ import { EmailService } from './email/email-service';
 import { SendEmailLogs } from '../domain/use-cases/email/send-email-logs';
 import { MongoLogDatasource } from '../infraestructure/datasources/mongo-log.datasource';
 import { LogSeverityLevel } from '../domain/entities/log.entity';
+import { PostgresLogDatasource } from '../infraestructure/datasources/postgres-log.datasource';
 
 const logRepository =  new LogRepositoryImpl(
-	 	new FileSystemDatasource() 
+	 	//new FileSystemDatasource() 
 		//new MongoLogDatasource()
+		new PostgresLogDatasource()
 	);	
 const emailService = new EmailService();
 export class Server {
@@ -29,26 +31,26 @@ export class Server {
 		// })
 
 		// ENVIAR CORREO A VARIS DESTINATARIOS Y CON ARCHIVOS ADJUNTOS
-		new SendEmailLogs(
-			emailService,
-			logRepository,
-		).execute([ 'mvt.2000@hotmail.com', 'mvt.2000vt@hotmail.com' ])
+		// new SendEmailLogs(
+		// 	emailService,
+		// 	logRepository,
+		// ).execute([ 'mvt.2000@hotmail.com', 'mvt.2000vt@hotmail.com' ])
 
 		// const logs = await logRepository.getLogs(LogSeverityLevel.low)
 		// console.log(logs);
 
-		// CronService.createJob(
-		// 	'*/5 * * * * *',
-		// 	() => {
-		// 		//const url = 'http://localhost:3000/'
-		// 		const url = 'https://google.com';
-		// 		new CheckService(
-		// 			logRepository,
-		// 			() => console.log( `${ url } is ok` ),
-		// 			( error ) => console.log(error)
-		// 		).execute(url);			
-		// 	}			
-		// );
+		CronService.createJob(
+			'*/5 * * * * *',
+			() => {
+				//const url = 'http://localhost:3000/'
+				const url = 'https://google.com';
+				new CheckService(
+					logRepository,
+					() => console.log( `${ url } is ok` ),
+					( error ) => console.log(error)
+				).execute(url);			
+			}			
+		);
 
 		// CronService.createJob(
 		// 	'*/3 * * * * *',
