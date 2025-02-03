@@ -44,7 +44,9 @@ export class FileSystemDatasource implements LogDataSource {
 	}
 
 	private getLogsFromFile = (path: string): LogEntity[] => {
-		const content = fs.readFileSync( this.allLogsPath, 'utf8' );
+		const content = fs.readFileSync( path, 'utf8' );
+		if ( content === '' ) return [];
+		
 		const logs = content.split('\n').map( log => LogEntity.fromJson(log) );
 		return logs;
 	}
@@ -61,7 +63,7 @@ export class FileSystemDatasource implements LogDataSource {
 				return this.getLogsFromFile(this.highLogsPath);
 			
 			default:
-				throw new Error(`${ serverityLevel } not implemented` );
+				throw new Error( `${ serverityLevel } not implemented` );
 		}
 	}
 }

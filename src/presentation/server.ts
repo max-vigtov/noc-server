@@ -4,11 +4,16 @@ import { LogRepositoryImpl } from '../infraestructure/repositories/log-impl.repo
 import { FileSystemDatasource } from '../infraestructure/datasources/file-system.datasource';
 import { EmailService } from './email/email-service';
 import { SendEmailLogs } from '../domain/use-cases/email/send-email-logs';
+import { MongoLogDatasource } from '../infraestructure/datasources/mongo-log.datasource';
+import { LogSeverityLevel } from '../domain/entities/log.entity';
 
-const fileSystemLogRepository =  new LogRepositoryImpl( new FileSystemDatasource() );	
+const logRepository =  new LogRepositoryImpl(
+	 	new FileSystemDatasource() 
+		//new MongoLogDatasource()
+	);	
 const emailService = new EmailService();
 export class Server {
-	static start(){
+	static async start(){
 		console.log('Server started...');
 
 		// ENVIAR CORREO A UN SOLO DESTINATARIO Y SIN ARCHIVOS ADJUNTOS
@@ -24,11 +29,13 @@ export class Server {
 		// })
 
 		// ENVIAR CORREO A VARIS DESTINATARIOS Y CON ARCHIVOS ADJUNTOS
-		// new SendEmailLogs(
-		// 	emailService,
-		// 	fileSystemLogRepository,
-		// ).execute([ 'mvt.2000@hotmail.com', 'mvt.2000vt@hotmail.com' ])
+		new SendEmailLogs(
+			emailService,
+			logRepository,
+		).execute([ 'mvt.2000@hotmail.com', 'mvt.2000vt@hotmail.com' ])
 
+		// const logs = await logRepository.getLogs(LogSeverityLevel.low)
+		// console.log(logs);
 
 		// CronService.createJob(
 		// 	'*/5 * * * * *',
@@ -36,7 +43,7 @@ export class Server {
 		// 		//const url = 'http://localhost:3000/'
 		// 		const url = 'https://google.com';
 		// 		new CheckService(
-		// 			fileSystemLogRepository,
+		// 			logRepository,
 		// 			() => console.log( `${ url } is ok` ),
 		// 			( error ) => console.log(error)
 		// 		).execute(url);			
