@@ -1,7 +1,5 @@
 import nodemailer from 'nodemailer'
 import { envs } from '../../config/plugins/envs.plugins'
-import { LogRepository } from '../../domain/repositories/log.repository';
-import { LogEntity, LogSeverityLevel } from '../../domain/entities/log.entity';
 
 interface SendEmailOptions {
 	to: string | string[];
@@ -17,7 +15,7 @@ interface Attachment{
 
 export class EmailService {
 	private trasporter = nodemailer.createTransport({
-		service: envs.MAILER_EMAIL,
+		service: envs.MAILER_SERVICE,
 		auth: {
 			user: envs.MAILER_EMAIL,
 			pass: envs.MAILER_SECRET_KEY,		

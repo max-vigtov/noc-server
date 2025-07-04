@@ -1,12 +1,12 @@
 import { CronService } from './cron/cron-service';
 import { CheckService } from '../domain/use-cases/checks/check-service';
-import { LogRepositoryImpl } from '../infraestructure/repositories/log-impl.repository';
-import { FileSystemDatasource } from '../infraestructure/datasources/file-system.datasource';
+import { LogRepositoryImpl } from '../infrastructure/repositories/log-impl.repository';
+import { FileSystemDatasource } from '../infrastructure/datasources/file-system.datasource';
 import { EmailService } from './email/email-service';
 import { SendEmailLogs } from '../domain/use-cases/email/send-email-logs';
-import { MongoLogDatasource } from '../infraestructure/datasources/mongo-log.datasource';
+import { MongoLogDatasource } from '../infrastructure/datasources/mongo-log.datasource';
 import { LogSeverityLevel } from '../domain/entities/log.entity';
-import { PostgresLogDatasource } from '../infraestructure/datasources/postgres-log.datasource';
+import { PostgresLogDatasource } from '../infrastructure/datasources/postgres-log.datasource';
 import { CheckServiceMultiple } from '../domain/use-cases/checks/check-service-multiple';
 
 const fsLogRepository =  new LogRepositoryImpl(new FileSystemDatasource());	
