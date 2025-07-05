@@ -34,7 +34,8 @@ A robust monitoring and notification system built with Node.js and TypeScript, d
 2. Copy `.env.template` to `.env` and configure environment variables
 3. Install dependencies: `npm install`
 4. Start databases: `docker-compose up -d`
-5. Run development server: `npm run dev`
+5. Run migrations: `npx prisma migrate dev`
+6. Run development server: `npm run dev`
 
 ## 🔒 Security
 
